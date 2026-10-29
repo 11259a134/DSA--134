@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a node in a doubly linked list
+struct Node {
+    int data;
+    struct Node *next;
+    struct Node *prev;
+};
+
+struct Node *head = NULL; // Global head pointer
+
+// Function to insert a node at the beginning
+void insertAtBeginning(int data) {
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = head;
+
+    if (head != NULL) {
+        head->prev = newNode;
+    }
+    head = newNode;
+    printf("Inserted %d at the beginning.\n", data);
+}
+
+// Function to display the doubly linked list in forward order
+void displayForward() {
+    struct Node *temp = head;
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    printf("Doubly Linked List (Forward): ");
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+// Function to display the doubly linked list in reverse order
+void displayBackward() {
+    struct Node *temp = head;
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    // Traverse to the last node
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    printf("Doubly Linked List (Backward): ");
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->prev;
+    }
+    printf("NULL\n");
+}
+
+// Function to free memory allocated for the list
+void freeList() {
+    struct Node *current = head;
+    struct Node *next;
+    while (current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+    head = NULL; // Reset head after freeing
+    printf("List memory freed.\n");
+}
+
+int main() {
+    insertAtBeginning(10);
+    insertAtBeginning(20);
+    insertAtBeginning(30);
+    displayForward();
+    displayBackward();
+    insertAtBeginning(5);
+    displayForward();
+    freeList()
+ return 0;
+}
+
+
+
+Output:
+Inserted 10 at the beginning.
+Inserted 20 at the beginning.
+Inserted 30 at the beginning.
+Doubly Linked List (Forward): 30 <-> 20 <-> 10 <-> NULL
+Doubly Linked List (Backward): 10 <-> 20 <-> 30 <-> NULL
+Inserted 5 at the beginning.
+Doubly Linked List (Forward): 5 <-> 30 <-> 20 <-> 10 <-> NULL
+List memory freed.
+
+
+
+
+
