@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 10
+#define EMPTY -1
+
+int hashTable[SIZE];
+
+// Initialize hash table
+void initializeTable() {
+    for (int i = 0; i < SIZE; i++) {
+        hashTable[i] = EMPTY;
+    }
+}
+
+// Hash function
+int hashFunction(int key) {
+    return key % SIZE;
+}
+void insert(int key) {
+    int index = hashFunction(key);
+    int originalIndex = index;
+     while (hashTable[index] != EMPTY) {
+        index = (index + 1) % SIZE; // Linear probing
+        if (index == originalIndex) { // Table is full
+            printf("Hash table is full. Cannot insert %d.\n", key);
+            return 
+         }}
+    hashTable[index] = key;
+    printf("Inserted %d at index %d.\n", key, index);
+}
+void display() {
+    printf("\nHash Table:\n");
+    for (int i = 0; i < SIZE; i++) {
+        if (hashTable[i] == EMPTY) {
+            printf("Index %d: EMPTY\n", i);
+        } else {
+            printf("Index %d: %d\n", i, hashTable[i]);
+        }
+    }
+}
+int main() {
+    initializeTable();
+    insert(10);
+    insert(20);
+    insert(30);
+    insert(12); // Collision with 2 at index 2
+    insert(22); // Collision with 12 at index 2, then 22 at index 3
+    insert(5);
+    insert(15);
+    insert(25);
+    insert(35);
+    insert(45);
+    insert(55); // Table full example
+ display();
+     return 0;
+}
+
+
+
+
+
+
+Output:
+Inserted 10 at index 0.
+Inserted 20 at index 0.
+Hash table is full. Cannot insert 20.
+Inserted 30 at index 0.
+Hash table is full. Cannot insert 30.
+Inserted 12 at index 2.
+Inserted 22 at index 3.
+Inserted 5 at index 5.
+Inserted 15 at index 6.
+Inserted 25 at index 7.
+Inserted 35 at index 8.
+Inserted 45 at index 9.
+Hash table is full. Cannot insert 55.
+
+Hash Table:
+Index 0: 10
+Index 1: EMPTY
+Index 2: 12
+Index 3: 22
+Index 4: EMPTY
+Index 5: 5
+Index 6: 15
+Index 7: 25
+Index 8: 35
+Index 9: 45
