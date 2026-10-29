@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Adjacency Matrix Representation
+int adjMatrix[20][20];
+int visited[20];
+int numVertices;
+
+void dfs(int vertex) {
+    visited[vertex] = 1; // Mark as visited
+    printf("%d ", vertex); // Print the visited vertex
+
+    for (int i = 0; i < numVertices; i++) {
+        // If there's an edge and the neighbor hasn't been visited
+        if (adjMatrix[vertex][i] == 1 && !visited[i]) {
+            dfs(i); // Recursively call DFS for the neighbor
+        }
+    }
+}
+
+int main() {
+    printf("Enter the number of vertices: ");
+    scanf("%d", &numVertices);
+
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
+            scanf("%d", &adjMatrix[i][j]);
+        }
+    }
+
+    // Initialize visited array to all unvisited (0)
+    for (int i = 0; i < numVertices; i++) {
+        visited[i] = 0;
+    }
+    int startVertex;
+    printf("Enter the starting vertex for DFS: ");
+    scanf("%d", &startVertex);
+
+    printf("DFS Traversal: ");
+    dfs(startVertex);
+    printf("\n");
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
+Output:
+For a graph with 4 vertices and the following adjacency matrix (representing a path 0-1-2-3):
+0 1 0 0
+1 0 1 0
+0 1 0 1
+0 0 1 0
+If the starting vertex is 0, the output would be:
+
+
+Enter the number of vertices: 4
+Enter the adjacency matrix:
+0 1 0 0
+1 0 1 0
+0 1 0 1
+0 0 1 0
+Enter the starting vertex for DFS: 0
+DFS Traversal: 0 1 2 3
+
+
