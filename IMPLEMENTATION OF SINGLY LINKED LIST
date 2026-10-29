@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for a linked list node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to insert a node at the end of the linked list
+void insertEnd(struct Node** head_ref, int new_data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* last = *head_ref;
+
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    if (*head_ref == NULL) {
+        *head_ref = new_node;
+        return;
+    }
+
+    while (last->next != NULL) {
+        last = last->next;
+    }
+    last->next = new_node;
+}
+
+// Function to delete the first node of the linked list
+void deleteFront(struct Node** head_ref) {
+    if (*head_ref == NULL) {
+        printf("List is empty, nothing to delete.\n");
+        return;
+    }
+    struct Node* temp = *head_ref;
+    *head_ref = (*head_ref)->next;
+    printf("Deleted element: %d\n", temp->data);
+    free(temp);
+}
+
+// Function to print the linked list
+void displayList(struct Node* node) {
+    printf("Linked List: ");
+    while (node != NULL) {
+        printf("%d -> ", node->data);
+        node = node->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL; // Initialize an empty linked
+    // Insert elements
+    insertEnd(&head, 10);
+    insertEnd(&head, 20);
+    insertEnd(&head, 30);
+    displayList(head); // Output: Linked List: 10 -> 20 -> 30 -> NULL
+    deleteFront(&head); // Output: Deleted element: 10
+    displayList(head); // Output: Linked List: 20 -> 30 -> NULL
+    insertEnd(&head, 40);
+    displayList(head); // Output: Linked List: 20 -> 30 -> 40 -> NULL
+    deleteFront(&head); // Output: Deleted element: 20
+    displayList(head); // Output: Linked List: 30 -> 40 -> NULL
+    return 0;
+}
+Output:
+Code
+Linked List: 10 -> 20 -> 30 -> NULL
+Deleted element: 10
+Linked List: 20 -> 30 -> NULL
+Linked List: 20 -> 30 -> 40 -> NULL
+Deleted element: 20
+Linked List: 30 -> 40 -> NULL
+
